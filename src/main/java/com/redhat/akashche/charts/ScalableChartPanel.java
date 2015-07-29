@@ -5,6 +5,8 @@ import org.jfree.chart.JFreeChart;
 
 import java.awt.*;
 
+import static com.redhat.akashche.charts.ChartBuilder.toColor;
+
 /**
  * User: alexkasko
  * Date: 7/29/15
@@ -16,7 +18,7 @@ public class ScalableChartPanel extends ChartPanel {
                 false, false, false, false, false, false);
         this.setDomainZoomable(true);
         this.setRangeZoomable(false);
-        this.setZoomOutlinePaint(Color.blue);
-        this.setZoomFillPaint(new Color(0, 0, 255, 63));
+//        this.setZoomOutlinePaint(Color.blue);
+        this.setZoomFillPaint(toColor("#55ff9800"));
     }
 }

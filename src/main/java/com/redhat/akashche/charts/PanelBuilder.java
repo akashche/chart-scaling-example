@@ -12,7 +12,7 @@ public class PanelBuilder {
 
     public JPanel createPanel() {
         double[][] data = new DataGen().createDataset();
-        double[][] aggregated = new DataAggregator().aggregate(data, 0, 1);
+        double[][] aggregated = new DataAggregator().aggregate(data, 0.1f, 0.13f);
         JFreeChart chart = new ChartBuilder().createChart(aggregated);
         return new ScalableChartPanel(chart);
     }

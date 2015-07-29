@@ -12,19 +12,19 @@ public class DataAggregator {
     double[][] aggregate(double[][] data, float fromPercent, float toPercent) {
         // todo: real time based length
         int min = Math.round(data[0].length * fromPercent);
-        int max = Math.round(data[1].length * toPercent);
+        int max = Math.round(data[0].length * toPercent);
 
         int interval = (max - min) / DOMAIN_MAX;
-        if (interval < 1) interval = 1;
-        // todo: fix rounding
-        int len = Math.min(max - min, DOMAIN_MAX) + 2;
-        double [][] res = new double[data.length][];
+        if (0 == interval) interval = 1;
+        int len = Math.min(max - min, DOMAIN_MAX);
+        double[][] res = new double[data.length][];
         for (int i = 0; i < data.length; i++) {
             double[] arr = new double[len];
             int l = 0;
-            for (int j = 0; j < data[i].length; j += interval) {
+            // note: may omit some end intervals due to rounding
+            for (int j = min; j + interval < max && l < len; j += interval) {
                 double val = 0;
-                for (int k = 0; k < interval && j + k < data[i].length; k++) {
+                for (int k = 0; k < interval && j + k < max; k++) {
                     val += data[i][j + k];
                 }
                 arr[l++] = val;

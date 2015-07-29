@@ -7,7 +7,7 @@ import java.util.Random;
  * Date: 7/29/15
  */
 public class DataGen {
-    private static final int SIZE = 100;
+    private static final int SIZE = 1000;
 
     double[][] createDataset() {
         double[] green = new double[SIZE];

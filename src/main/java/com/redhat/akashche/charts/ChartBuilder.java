@@ -13,8 +13,6 @@ import org.jfree.data.Range;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * User: alexkasko
@@ -24,8 +22,8 @@ public class ChartBuilder {
 
     public JFreeChart createChart(double[][] data) {
         DefaultCategoryDataset ds = new DefaultCategoryDataset();
-        double min = Double.MAX_VALUE;
-        double max = Double.MIN_VALUE;
+        double min = 0;
+        double max = 0;
         for (int i = 0; i < data.length; i++) {
             for (int j = 0; j < data[i].length; j++) {
                 double val = data[i][j];
@@ -71,7 +69,7 @@ public class ChartBuilder {
         ax.setTickLabelPaint(toColor("#FF222222"));
     }
 
-    private static Color toColor(String rgba) {
+    static Color toColor(String rgba) {
         String unprefixed = rgba.startsWith("#") ? rgba.substring(1) : rgba;
         if (!(6 == unprefixed.length() || 8 == unprefixed.length()))
             throw new RuntimeException("Invalid color: [" + rgba + "]");
