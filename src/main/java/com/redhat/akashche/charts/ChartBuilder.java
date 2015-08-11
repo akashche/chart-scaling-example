@@ -20,7 +20,7 @@ import java.awt.*;
  */
 public class ChartBuilder {
 
-    public JFreeChart createChart(double[][] data) {
+    public JFreeChart createChart(ScalableParent parent, double[][] data) {
         DefaultCategoryDataset ds = new DefaultCategoryDataset();
         double min = 0;
         double max = 0;
@@ -33,7 +33,7 @@ public class ChartBuilder {
             }
         }
 
-        ScalablePlot plot = new ScalablePlot(ds, new CategoryAxis(), new NumberAxis(), new StackedBarRenderer());
+        ScalablePlot plot = new ScalablePlot(parent, ds, new CategoryAxis(), new NumberAxis(), new StackedBarRenderer());
         plot.setOrientation(PlotOrientation.VERTICAL);
         JFreeChart chart = new JFreeChart("", JFreeChart.DEFAULT_TITLE_FONT, plot, false);
         ChartFactory.getChartTheme().apply(chart);

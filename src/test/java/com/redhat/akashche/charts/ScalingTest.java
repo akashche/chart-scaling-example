@@ -15,17 +15,17 @@ public class ScalingTest {
 
     @Test
     public void test() {
-        showAndWait(new PanelBuilder().createPanel());
+        showAndWait(new PanelBuilder().createMainFrame());
     }
 
 
-    public static void showAndWait(final Container panel) {
+    public static void showAndWait(final JFrame mf) {
         try {
             final Thread[] edtThreadHolder = new Thread[1];
             SwingUtilities.invokeAndWait(new Runnable() {
                 @Override
                 public void run() {
-                    JFrame mf = createMainFrame(panel);
+                    mf.addWindowListener(new CloseListener());
                     mf.setVisible(true);
                     edtThreadHolder[0] = Thread.currentThread();
                 }
@@ -35,16 +35,6 @@ public class ScalingTest {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private static JFrame createMainFrame(Container content) {
-        JFrame jf = new JFrame();
-        jf.addWindowListener(new CloseListener());
-        jf.setContentPane(content);
-        jf.pack();
-        jf.setSize(1024, 600);
-        jf.setLocationRelativeTo(null);
-        return jf;
     }
 
     private static class CloseListener extends WindowAdapter {

@@ -14,22 +14,33 @@ public class DataAggregator {
         int min = Math.round(data[0].length * fromPercent);
         int max = Math.round(data[0].length * toPercent);
 
-        int interval = (max - min) / DOMAIN_MAX;
-        if (0 == interval) interval = 1;
-        int len = Math.min(max - min, DOMAIN_MAX);
         double[][] res = new double[data.length][];
-        for (int i = 0; i < data.length; i++) {
-            double[] arr = new double[len];
-            int l = 0;
-            // note: may omit some end intervals due to rounding
-            for (int j = min; j + interval < max && l < len; j += interval) {
-                double val = 0;
-                for (int k = 0; k < interval && j + k < max; k++) {
-                    val += data[i][j + k];
+        int len = Math.min(max - min, DOMAIN_MAX);
+        if (len < DOMAIN_MAX) { // plain slice
+            for (int i = 0; i < data.length; i++) {
+                double[] arr = new double[len];
+                int l = 0;
+                for (int j = min; j < max; j++) {
+                    arr[l++] = data[i][j];
                 }
-                arr[l++] = val;
+                res[i] = arr;
             }
-            res[i] = arr;
+        } else { // aggregation
+            int interval = (max - min) / DOMAIN_MAX;
+            if (0 == interval) interval = 1;
+            for (int i = 0; i < data.length; i++) {
+                double[] arr = new double[len];
+                int l = 0;
+                // note: may omit some end intervals due to rounding
+                for (int j = min; j + interval < max && l < len; j += interval) {
+                    double val = 0;
+                    for (int k = 0; k < interval && j + k < max; k++) {
+                        val += data[i][j + k];
+                    }
+                    arr[l++] = val;
+                }
+                res[i] = arr;
+            }
         }
         return res;
     }

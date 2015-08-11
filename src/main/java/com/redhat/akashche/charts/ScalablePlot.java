@@ -14,9 +14,11 @@ import java.awt.geom.Point2D;
  * Date: 7/29/15
  */
 public class ScalablePlot extends CategoryPlot {
+    private final ScalableParent parent;
 
-    public ScalablePlot(CategoryDataset dataset, CategoryAxis domainAxis, ValueAxis rangeAxis, CategoryItemRenderer renderer) {
+    public ScalablePlot(ScalableParent parent, CategoryDataset dataset, CategoryAxis domainAxis, ValueAxis rangeAxis, CategoryItemRenderer renderer) {
         super(dataset, domainAxis, rangeAxis, renderer);
+        this.parent = parent;
     }
 
     @Override
@@ -26,8 +28,7 @@ public class ScalablePlot extends CategoryPlot {
 
     @Override
     public void zoomDomainAxes(double lowerPercent, double upperPercent, PlotRenderingInfo state, Point2D source) {
-        System.out.println(lowerPercent);
-        System.out.println(upperPercent);
+        parent.zoomin((float) lowerPercent, (float) upperPercent);
     }
 
     @Override
